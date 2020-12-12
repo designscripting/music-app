@@ -15,6 +15,11 @@ const routes: Routes = [
         path: 'music',
         loadChildren: () => import('@app/containers/music-layout/music-layout.module').then(m => m.MusicLayoutModule)
       },
+      {
+        path: '',
+        redirectTo: 'welcome',
+        pathMatch: 'full'
+      }
     ]
   },
 

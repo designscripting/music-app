@@ -25,10 +25,24 @@ export class SongsListComponent implements OnInit {
 
   ngOnInit() {
     // implement local cache
-    this.songService.getSongsData().subscribe((data) => {
-      this.songs = data;
-      this.ref.markForCheck();
-    });
+
+    if (window.localStorage && window.localStorage.getItem("allSongs")) {
+      setTimeout(() => {
+        this.songs = JSON.parse(window.localStorage.getItem("allSongs"));
+        this.ref.markForCheck();
+      }, 500);
+    } else {
+      this.songService.getSongsData().subscribe((data) => {
+        this.songs = data;
+        window.localStorage.setItem("allSongs", JSON.stringify(this.songs));
+      });
+    }
+    this.ref.markForCheck();
+
+    // this.songs = window.localStorage && window.localStorage.getItem('allSongs') || this.songService.getSongsData().subscribe((data) => {
+    //   this.songs = data;
+    //   this.ref.markForCheck();
+    // });
     this.filterInput.valueChanges
       .pipe(debounceTime(100), distinctUntilChanged())
       .subscribe((term) => {
