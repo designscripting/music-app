@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from '@app/app-routing.module';
 import { AppComponent } from '@app/app.component';
 import { BaseContainerComponent } from '@app/containers/base-container/base-container.component';
@@ -16,7 +16,8 @@ import { MusicLayoutModule } from '@app/containers/music-layout/music-layout.mod
     BrowserModule,
     AppRoutingModule,
     WelcomePageModule,
-    MusicLayoutModule
+    MusicLayoutModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,60 @@
+<div class="songlist-container">
+  <div class="container h-100">
+    <div class="row justify-content-center mt-3 mb-3">
+      <div class="col-12 col-md-10 col-lg-8">
+        <form class="card card-sm">
+          <div class="card-body row no-gutters align-items-center">
+            <div class="col-auto mt-2">
+              <em class="fas fa-search h4 text-body"></em>
+            </div>
+            <!--end of col-->
+            <div class="col">
+              <input
+                #search
+                class="form-control form-control-lg form-control-borderless"
+                type="search"
+                placeholder="Search songs or keywords"
+                [formControl]="filterInput"
+              />
+            </div>
+            <!--end of col-->
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="song-list">
+      <div *ngIf="songs.length <= 0">Loading songs...</div>
+
+      <div
+        *ngFor="
+          let song of songs | FilterPipe: filterText;
+          trackBy: trackBySongID
+        "
+      >
+        <div class="song-item mb-1">
+          <div class="thumbnail-holder float-left mr-3">
+            <img
+              [src]="song.thumbnailUrl"
+              [alt]="song.title"
+              class="thumbnail"
+            />
+          </div>
+          <div class="float-left mt-3">
+            <span
+              >{{ song.title }}<br />
+              Album: {{ song.albumTitle }}</span
+            >
+          </div>
+          <div class="float-none"></div>
+        </div>
+      </div>
+      <div
+        *ngIf="
+          (songs | FilterPipe: filterText).length === 0 && songs.length > 0
+        "
+      >
+        No songs available...
+      </div>
+    </div>
+  </div>
+</div>

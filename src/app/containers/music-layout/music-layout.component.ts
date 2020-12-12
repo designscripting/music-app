@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-music-layout',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MusicLayoutComponent implements OnInit {
 
-  constructor() { }
+  links = [
+    { title: 'All Songs', fragment: 'allsongs' },
+    { title: 'Playlists', fragment: 'playlist' }
+  ];
+  
+  constructor(public route: ActivatedRoute) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
 }
