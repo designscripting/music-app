@@ -1,15 +1,130 @@
-<div class="playlist-container">
-  <div class="container h-100">
-    <div class="mt-3 mb-3">
-      <div class="playlist-item mt-2" *ngFor="let playlist of playLists">
-        <div class="mt-2 p-1 ml-2 mr-2">
-          <div class="float-left"><em class="fab fa-lastfm mr-2"></em>{{ playlist.name }}</div>
-          <div class="float-right">CreateAt - {{ playlist.name }} <em class="ml-3 fas fa-ellipsis-v"></em></div>
+<ng-template #templateOne>
+  <div class="playlist-container">
+    <div class="container h-100">
+      <div class="mt-3 mb-3">
+        <ng-container *ngIf="playLists.length>0; else noplaylistdata">
+        <div class="playlist-item mt-2" *ngFor="let playlist of playLists">
+          <div class="mt-2 p-1 ml-2 mr-2">
+            <div class="float-left">
+              <em class="fab fa-lastfm mr-2"></em>{{ playlist.name }}
+            </div>
+            <div class="float-right">
+              <button
+                type="button"
+                class="btn btn-danger mr-1 p-1 mt-n1"
+                (click)="editSong(templateThree, playlist)"
+              >
+                Edit
+              </button>
+            </div>
+            <div class="float-right mr-2">
+              Songs({{ playlist.songs.length }})
+              <em class="ml-3 fas fa-ellipsis-v"></em>
+            </div>
+          </div>
         </div>
+        </ng-container>
+        <ng-template #noplaylistdata>
+          <div class="text-center">No playlist available - Create a new one...</div>
+        </ng-template>
+      </div>
+      <button
+        type="button"
+        class="create-playlist btn btn-success float-right mr-10"
+        (mouseup)="showRef(templateTwo)"
+      >
+        Create New Playlist
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #templateTwo>
+  <div>
+    <button
+      type="button"
+      class="create-playlist btn btn-success float-right mr-5"
+      (mouseup)="saveAndClose(templateThree)"
+    >
+      Save & Close
+    </button>
+    <div class="container h-100">
+      <div class="mt-3 mb-3">
+        <div class="mb-2">
+          {{ toCachePlayList[0]?.name }} - Songs({{
+            toCachePlayList[0]?.songs.length
+          }}) :
+        </div>
+        <ng-container
+          *ngFor="let song of toCachePlayList[0]?.songs; index as i"
+        >
+          <label
+            class="btn btn-light mr-1 mb-1 border col-2 text-truncate"
+            type="menu"
+          >
+            <em class="fas fa-times" (click)="removeSongFromPlayList(i)"></em>
+            {{ song.title }}</label
+          >
+        </ng-container>
       </div>
     </div>
-    <button type="button" class="btn btn-success float-right">
-      Create New Playlist
-    </button>
+    <app-songs-list
+      showAddSongs="true"
+      (addPlayListSong)="handleAddSong($event)"
+    ></app-songs-list>
   </div>
-</div>
+</ng-template>
+
+<ng-template #templateThree>
+  <div class="songlist-container">
+    <div class="container h-100">
+      <button
+        type="button"
+        class="create-playlist btn btn-success float-right mr-5"
+        (mouseup)="showRef(templateOne)"
+      >
+        All Playlists
+      </button>
+      <div class="mt-3 mb-3">
+        {{ toCachePlayList[0]?.name }} - Edit
+        <div
+          class="playlist-item mt-2"
+          *ngFor="let song of toCachePlayList[0]?.songs; index as i"
+        >
+          <div class="mt-2 p-1 ml-2 mr-2">
+            <div class="float-left">
+              <em class="fas fa-music mr-2"></em>{{ song.title }}
+            </div>
+            <div class="float-right">
+              <button
+                type="button"
+                class="btn btn-danger mr-1 p-1 mt-n1"
+                (click)="removeSongFromPlayList(i)"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button
+        type="button"
+        class="create-playlist btn btn-success float-right mr-10"
+        (mouseup)="shuffleSongs()"
+      >
+        Shuffle Songs
+      </button>
+      <button
+        type="button"
+        class="create-playlist btn btn-success float-right mr-3"
+        (mouseup)="showRef(templateTwo)"
+      >
+        Add Song
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-container
+  *ngTemplateOutlet="template === null ? templateOne : template"
+></ng-container>

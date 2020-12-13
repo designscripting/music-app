@@ -45,6 +45,15 @@
               Album: {{ song.albumTitle }}</span
             >
           </div>
+          <div *ngIf="showAddSongs === 'true'" class="float-right">
+            <button
+              type="button"
+              class="btn btn-success mr-3 mt-4"
+              (click)="addSongs(song)"
+            >
+              Add
+            </button>
+          </div>
           <div class="float-none"></div>
         </div>
       </div>

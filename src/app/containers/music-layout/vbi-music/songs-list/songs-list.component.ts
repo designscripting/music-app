@@ -3,6 +3,9 @@ import {
   Component,
   OnInit,
   ChangeDetectorRef,
+  Input,
+  Output,
+  EventEmitter
 } from "@angular/core";
 import { SongsListService } from "./songs-list.service";
 import { FormControl } from "@angular/forms";
@@ -15,6 +18,9 @@ import { debounceTime, distinctUntilChanged } from "rxjs/operators";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SongsListComponent implements OnInit {
+  @Input() showAddSongs: string;
+  @Output() addPlayListSong: EventEmitter<any> = new EventEmitter();
+
   public songs: Array<any> = [];
   public filterInput = new FormControl();
   public filterText: string;
@@ -34,20 +40,20 @@ export class SongsListComponent implements OnInit {
     } else {
       this.songService.getSongsData().subscribe((data) => {
         this.songs = data;
+        // this.songs = data.slice(0, 10)
+        this.ref.markForCheck();
         window.localStorage.setItem("allSongs", JSON.stringify(this.songs));
       });
     }
-    this.ref.markForCheck();
 
-    // this.songs = window.localStorage && window.localStorage.getItem('allSongs') || this.songService.getSongsData().subscribe((data) => {
-    //   this.songs = data;
-    //   this.ref.markForCheck();
-    // });
     this.filterInput.valueChanges
       .pipe(debounceTime(100), distinctUntilChanged())
       .subscribe((term) => {
         this.filterText = term;
       });
+  }
+  addSongs(song: any) {
+    this.addPlayListSong.emit(song);
   }
   trackBySongID(index: number, song: any): string {
     return song.id;

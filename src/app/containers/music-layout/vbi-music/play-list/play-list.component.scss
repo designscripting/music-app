@@ -1,7 +1,10 @@
-.playlist-item {
+.playlist-item, .songlist-item {
   width: 650px;
   height: 50px;
   margin: 0 auto;
   border: 1px solid #ccc;
   border-radius: 3px;
+}
+.create-playlist {
+  margin-right: 230px;
 }
