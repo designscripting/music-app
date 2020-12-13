@@ -11,29 +11,29 @@ const routes: Routes = [
         path: 'welcome',
         loadChildren: () =>
           import('@app/containers/welcome-page/welcome-page.module').then(
-            m => m.WelcomePageModule
-          )
+            m => m.WelcomePageModule,
+          ),
       },
       {
         path: 'music',
         loadChildren: () =>
           import('@app/containers/music-layout/music-layout.module').then(
-            m => m.MusicLayoutModule
-          )
+            m => m.MusicLayoutModule,
+          ),
       },
       {
         path: '',
         redirectTo: 'welcome',
-        pathMatch: 'full'
-      }
-    ]
+        pathMatch: 'full',
+      },
+    ],
   },
 
-  { path: '**', redirectTo: '', pathMatch: 'full' }
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ]
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

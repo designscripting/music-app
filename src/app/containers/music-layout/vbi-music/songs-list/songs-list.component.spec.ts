@@ -11,7 +11,7 @@ describe('SongsListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SongsListComponent]
+      declarations: [SongsListComponent],
     }).compileComponents()
   }))
 

@@ -1,7 +1,7 @@
-import { Injectable, Pipe, PipeTransform } from '@angular/core'
+import { Injectable, Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'FilterPipe'
+  name: 'FilterPipe',
 })
 @Injectable()
 export class FilterPipe implements PipeTransform {
@@ -15,7 +15,7 @@ export class FilterPipe implements PipeTransform {
     // To search in values of every variable of your object(item)
     return items.filter(
       item =>
-        JSON.stringify(item).toLowerCase().indexOf(filter.toLowerCase()) !== -1
+        JSON.stringify(item).toLowerCase().indexOf(filter.toLowerCase()) !== -1,
     )
   }
 }

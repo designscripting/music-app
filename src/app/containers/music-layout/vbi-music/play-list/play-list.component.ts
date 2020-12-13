@@ -3,18 +3,19 @@ import {
   Component,
   OnInit,
   ChangeDetectorRef,
-  TemplateRef
-} from '@angular/core'
+  TemplateRef,
+} from '@angular/core';
+import { IPlaylistItem } from './play-list.model';
 
 @Component({
   selector: 'app-play-list',
   templateUrl: './play-list.component.html',
   styleUrls: ['./play-list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlayListComponent implements OnInit {
-  public playLists: Array<any> = []
-  public toCachePlayList: Array<any>
+  public playLists: Array<IPlaylistItem> = []
+  public toCachePlayList: Array<IPlaylistItem>
   public showPlaylist = true
   public template: TemplateRef<any> = null
   constructor(private changeRef: ChangeDetectorRef) {}
@@ -28,9 +29,9 @@ export class PlayListComponent implements OnInit {
     this.toCachePlayList = [
       {
         name: 'myplaylist',
-        songs: []
-      }
-    ]
+        songs: [],
+      },
+    ];
   }
 
   getCachePlayList() {
@@ -41,7 +42,7 @@ export class PlayListComponent implements OnInit {
   }
 
   showRef(template: TemplateRef<any>) {
-    this.template = template
+    this.template = template;
   }
 
   createNewPlayList(template: TemplateRef<any>) {
@@ -82,7 +83,7 @@ export class PlayListComponent implements OnInit {
       obj['songs'].push(event)
     }
   }
-  editSong(template: TemplateRef<any>, playlist: any) {
+  editSong(template: TemplateRef<any>, playlist: IPlaylistItem) {
     this.toCachePlayList = Array.of(playlist)
     this.showRef(template)
   }

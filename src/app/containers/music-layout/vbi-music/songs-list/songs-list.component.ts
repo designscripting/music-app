@@ -5,23 +5,24 @@ import {
   ChangeDetectorRef,
   Input,
   Output,
-  EventEmitter
-} from '@angular/core'
-import { SongsListService } from './songs-list.service'
-import { FormControl } from '@angular/forms'
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
+  EventEmitter,
+} from '@angular/core';
+import { SongsListService } from './songs-list.service';
+import { FormControl } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { ISongItem } from './songs-list.model';
 
 @Component({
   selector: 'app-songs-list',
   templateUrl: './songs-list.component.html',
   styleUrls: ['./songs-list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SongsListComponent implements OnInit {
   @Input() showAddSongs: string
-  @Output() addPlayListSong: EventEmitter<any> = new EventEmitter()
+  @Output() addPlayListSong: EventEmitter<ISongItem> = new EventEmitter()
 
-  public songs: Array<any> = []
+  public songs: Array<ISongItem> = []
   public filterInput = new FormControl()
   public filterText: string
   public throttle = 300
@@ -34,7 +35,7 @@ export class SongsListComponent implements OnInit {
 
   constructor(
     private songService: SongsListService,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
   ) {}
 
   ngOnInit() {
@@ -61,12 +62,12 @@ export class SongsListComponent implements OnInit {
       })
   }
 
-  addSongs(song: any) {
+  addSongs(song: ISongItem) {
     this.addPlayListSong.emit(song)
   }
 
-  trackBySongID(index: number, song: any): string {
-    return song.id
+  trackBySongID(index: number, song: ISongItem): number {
+    return song.id;
   }
 
   addItems(startIndex, endIndex, _method) {

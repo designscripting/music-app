@@ -1,12 +1,12 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async, inject } from '@angular/core/testing'
-import { SongsListService } from './songs-list.service'
+import { TestBed, async, inject } from '@angular/core/testing';
+import { SongsListService } from './songs-list.service';
 
 describe('Service: SongsList', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [SongsListService]
+      providers: [SongsListService],
     })
   })
 
